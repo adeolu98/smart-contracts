@@ -1,0 +1,55 @@
+pragma solidity ^0.4.26;
+
+import './IERC20.sol';
+
+import './VaultToken1.sol';
+import './VaultToken2.sol';
+
+
+contract FireTokenVault{
+    IERC20 FireToken;
+    IERC20 VaultToken1__;
+    address VaultToken1_;
+    IERC20 VaultToken2__;
+    address VaultToken2_;
+   
+
+    event VaultDepositConfirmed( address depositor, uint amountdeposited);
+
+constructor(IERC20 _firetoken, IERC20 _vaulttokken1, IERC20 _vaulttokken2 , address _VaultToken1, address _VaultToken2 ) public {
+    FireToken = _firetoken;
+    VaultToken1__ = _vaulttokken1;
+    VaultToken1_ = _VaultToken1;
+  VaultToken2__ = _vaulttokken2;
+    VaultToken2_ = _VaultToken2;
+}
+    
+
+    function FourtyPercentROI(uint _DepositAmount) public {
+
+        address __to = msg.sender;
+             
+        FireToken.transferFrom(msg.sender, address(this), _DepositAmount);
+
+        VaultToken1 vt = VaultToken1 (VaultToken1_);
+        vt.mint(__to, _DepositAmount );
+
+        emit VaultDepositConfirmed( msg.sender, _DepositAmount);
+
+        
+    }
+
+        function FiveHundredPercentROI(uint _DepositAmount) public {
+
+        address __to = msg.sender;
+             
+        FireToken.transferFrom(msg.sender, address(this), _DepositAmount);
+
+        VaultToken2 vt = VaultToken2 (VaultToken2_);
+        vt.mint(__to, _DepositAmount );
+
+        emit VaultDepositConfirmed(  msg.sender, _DepositAmount);
+
+        
+    }
+}
